@@ -8,3 +8,7 @@ const server = http.createServer(  (req, res) => {
     res.setHeader("Content-Type", "text/plain")
     res.end("Hello World!")
 })
+
+server.listen(port, hostname, () => {
+    console.log('Le serveur est en cours sur http://' + hostname + ':' + port)
+})
