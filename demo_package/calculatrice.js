@@ -16,3 +16,5 @@ function division(a, b) {
     }
     return a / b;
 }
+
+module.exports = { addition, soustraction, multiplication, division}
