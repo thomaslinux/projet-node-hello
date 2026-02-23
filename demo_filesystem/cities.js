@@ -16,3 +16,6 @@ function readCities() {
 
 let cities = [ 'Nantes', ' Rennes', ' Quimper', 'Paris' ];
 fs.writeFileSync("cities.csv", cities.join("\n"))
+
+cities = readCities();
+cities.forEach(city => console.log("ville : ", city));
