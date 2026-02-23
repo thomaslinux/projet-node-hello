@@ -27,7 +27,10 @@ app.get("/cities", (req, res) => {
 })
 
 app.get("/cities/:id", (req, res) => {
-    res.send(cities[req.params.id])
+    if (req.params.id < 1 || req.params.id > cities.length) {
+        return res.status(404).send("Ville non trouvée");   
+    }
+    res.send(cities[req.params.id - 1])
 })
 
 app.listen(port, () => {
