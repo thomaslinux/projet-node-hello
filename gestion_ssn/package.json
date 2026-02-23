@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "french-ssn": "^4.1.0"
+    "french-ssn": "^4.1.0",
+    "nodemon": "^3.1.14"
   }
 }
