@@ -15,7 +15,13 @@ function readCities() {
 }
 
 let cities = [ 'Nantes', 'Rennes', 'Quimper', 'Paris' ];
+// fs.rm("cities.csv")
 fs.writeFileSync("cities.csv", cities.join("\n"))
+
+cities = readCities();
+cities.forEach(city => console.log("ville : ", city));
+
+fs.appendFileSync("cities.csv","\nLorient","utf8")
 
 cities = readCities();
 cities.forEach(city => console.log("ville : ", city));
