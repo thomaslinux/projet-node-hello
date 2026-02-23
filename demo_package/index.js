@@ -1,0 +1,1 @@
+import { addition, soustraction, multiplication, division } from "./calculatrice";
