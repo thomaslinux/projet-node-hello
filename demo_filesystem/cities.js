@@ -11,4 +11,8 @@ function readCities() {
             console.error(err);
         }
     }
+    return cities.split("\n");
 }
+
+let cities = [ 'Nantes', ' Rennes', ' Quimper', 'Paris' ];
+fs.writeFileSync("cities.csv", cities.join("\n"))
