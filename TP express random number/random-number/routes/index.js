@@ -14,8 +14,6 @@ router.get("/", function (req, res, next) {
   console.log(numberToFind);
   res.render("index", {
     title: "Express Brains",
-    subtitle:
-      "Découvrez en un minimum de tour le nombre qui se cache derrière la carte mystère",
     lastNumberInput: lastNumberInput,
   });
 });
