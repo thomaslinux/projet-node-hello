@@ -30,13 +30,16 @@ app.get("/cities", (req, res) => {
   res.render("cities/index", { cities: cities });
 });
 
-app.post("/cities", (req, res) => {
+app.post(
+  "/cities",
   body("city")
     .isLength({ min: 3, max: 255 })
-    .withMessage("City must be at least 3 characters long");
-  cities.push(req.body.city);
-  res.redirect("/cities");
-});
+    .withMessage("City must be at least 3 characters long"),
+  (req, res) => {
+    cities.push(req.body.city);
+    res.redirect("/cities");
+  },
+);
 
 app.get("/cities/:id", (req, res) => {
   if (req.params.id < 1 || req.params.id > cities.length) {
