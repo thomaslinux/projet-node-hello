@@ -36,6 +36,14 @@ app.post(
     .isLength({ min: 3, max: 255 })
     .withMessage("City must be at least 3 characters long"),
   (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty) {
+      return res.status(422).render("cities.ejs", {
+        errors: errors.array(),
+        cities: cities,
+        city: req.body.city,
+      });
+    }
     cities.push(req.body.city);
     res.redirect("/cities");
   },
