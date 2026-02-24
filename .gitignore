@@ -4,3 +4,4 @@ api express/.gitignore
 api express/node_modules
 API express v2/node_modules
 Demo Express Generator/node_modules
+Demo Express Generator/city-app/node_modules
