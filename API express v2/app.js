@@ -31,6 +31,7 @@ app.get("/cities", (req, res) => {
 })
 
 app.post("/cities", (req, res) => {
+  body('city').isLength({min : 3, max : 255})
   cities.push(req.body.city);
   res.redirect("/cities");
 })
