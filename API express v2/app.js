@@ -37,7 +37,7 @@ app.post(
     .withMessage("City must be at least 3 characters long"),
   (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty) {
+    if (!errors.isEmpty()) {
       return res.status(422).render("cities.ejs", {
         errors: errors.array(),
         cities: cities,
