@@ -25,7 +25,8 @@ app.get("/", (req, res) => {
 const cities = "Nantes, Rennes, Lorient, Bordeaux, Quimper".split(", ");
 
 app.get("/cities", (req, res) => {
-    res.send(cities.join(", "))
+    // res.send(cities.join(", "))
+    res.render("cities/index", { cities: cities});
 })
 
 app.get("/cities/:id", (req, res) => {
