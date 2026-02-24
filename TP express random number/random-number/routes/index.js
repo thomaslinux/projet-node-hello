@@ -18,9 +18,36 @@ router.get("/", function (req, res, next) {
   });
 });
 
-router.post("/", function (req, res) {
-  lastNumberInput = req.body.userInput;
-  res.redirect("/");
-});
+router.post(
+  "/",
+  body("userInput").isInt().withMessage("Vous devez saisir un nombre"),
+  body("userInput").custom((value) => {
+    console.log(parseInt(value));
+    if (parseInt(value) < numberToFind) {
+      console.log("trop bas");
+      throw new Error("Trop bas");
+    }
+    if (parseInt(value) > numberToFind) {
+      throw new Error("Trop haut");
+    }
+    if (parseInt(value) == numberToFind) {
+      throw new Error("Bravo");
+    }
+    return true;
+  }),
+
+  (req, res) => {
+    lastNumberInput = req.body.userInput;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).render("index.ejs", {
+        title: "Express Brains",
+        errors: errors.array(),
+        userInput: req.body.userInput,
+      });
+    }
+    res.redirect("/");
+  },
+);
 
 module.exports = router;

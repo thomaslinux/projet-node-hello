@@ -30,7 +30,12 @@
             pattern="[0-9]*"
             autofocus
           />
-          <button class="btn btn-primary" type="submit">J'ai trouvé</button>
+          <button class="btn btn-primary" type="submit">Proposer</button>
+          <div class="text-danger">
+            <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+            <%= errors[0].msg %>
+            <% } %>
+          </div>
         </div>
       </form>
     </main>
