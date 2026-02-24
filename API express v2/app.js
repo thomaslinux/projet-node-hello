@@ -29,6 +29,10 @@ app.get("/cities", (req, res) => {
     res.render("cities/index", { cities: cities});
 })
 
+app.post("/cities", (req, res) => {
+  cities.push(req.body.city)
+})
+
 app.get("/cities/:id", (req, res) => {
     if (req.params.id < 1 || req.params.id > cities.length) {
         return res.status(404).send("Ville non trouvée");   
@@ -36,6 +40,7 @@ app.get("/cities/:id", (req, res) => {
     res.send(cities[req.params.id - 1])
 })
 
+// Cas d'erreurs
 app.use((req, res) => {
     res.status(404).send("404: page non trouvée")
 })
