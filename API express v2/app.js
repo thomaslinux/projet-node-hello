@@ -33,6 +33,10 @@ app.get("/cities/:id", (req, res) => {
     res.send(cities[req.params.id - 1])
 })
 
+app.use((req, res) => {
+    res.status(404).send("404: page non trouvée")
+})
+
 app.listen(port, () => {
   console.log("l'api ecoute sur le port : ", port);
 });
