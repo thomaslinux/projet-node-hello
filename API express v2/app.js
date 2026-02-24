@@ -33,6 +33,7 @@ app.get("/cities", (req, res) => {
 app.post(
   "/cities",
   body("city")
+    .trim()
     .isLength({ min: 3, max: 255 })
     .withMessage("City must be at least 3 characters long"),
   (req, res) => {
