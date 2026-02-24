@@ -31,7 +31,7 @@ app.get("/cities", (req, res) => {
 })
 
 app.post("/cities", (req, res) => {
-  body('city').isLength({min : 3, max : 255})
+  body('city').isLength({min : 3, max : 255}); // body est ici une fonction express-validator, et va chercher le name city pour la vérif
   cities.push(req.body.city);
   res.redirect("/cities");
 })
