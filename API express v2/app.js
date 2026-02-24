@@ -30,7 +30,8 @@ app.get("/cities", (req, res) => {
 })
 
 app.post("/cities", (req, res) => {
-  cities.push(req.body.city)
+  cities.push(req.body.city);
+  res.redirect("/cities");
 })
 
 app.get("/cities/:id", (req, res) => {
