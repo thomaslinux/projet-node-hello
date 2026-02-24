@@ -19,9 +19,14 @@
   <!-- views/index.ejs -->
   <form method="post" action="/cities">
     <div class="mb-3">
-        <label for="city" class="form-label">City
-        </label>
-        <input id="city" name="city" class="form-control" type="text">
+      <label for="city" class="form-label">City
+      </label>
+      <input id="city" name="city" class="form-control" type="text" value=" <%= typeof city !== 'undefined' ? city : '' %>">
+      <div class="invalid-feedback">
+        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+        <%= errors[0].msg %>
+        <% } %>
+      </div>
     </div>
     <button class="btn btn-primary">Submit</button>
   </form>
