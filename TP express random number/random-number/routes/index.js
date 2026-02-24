@@ -1,8 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const numberToFind = 99;
-let lastNumberInput = -1;
+const { body, validationResult } = require("express-validator");
 const MAX = 100;
 const MIN = 0;
 const randomNumber = Math.floor(Math.random() * (MAX - MIN) + MIN);
