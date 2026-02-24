@@ -4,11 +4,14 @@ var router = express.Router();
 const { body, validationResult } = require("express-validator");
 const MAX = 100;
 const MIN = 0;
-const randomNumber = Math.floor(Math.random() * (MAX - MIN) + MIN);
-const numberFound = false;
+let random = Math.floor(Math.random() * (MAX - MIN) + MIN);
+const numberToFind = random;
+
+let numberFound = false;
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  console.log(numberToFind);
   res.render("index", {
     title: "Express Brains",
     subtitle:
