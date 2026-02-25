@@ -13,6 +13,14 @@ const mongoose = require("mongoose");
 const uri = "mongodb://localhost:27017/city-app";
 const client = new MongoClient(uri);
 const db = client.db("city-app");
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.log("Connecté à Mongo via mongoose");
+  })
+  .catch((err) => {
+    console.log("erreur de connexion : ", err);
+  });
 
 client
   .connect()
