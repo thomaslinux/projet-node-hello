@@ -43,6 +43,8 @@ const Country = mongoose.model("Country", {
 });
 
 async function database() {
+  await Country.deleteMany();
+  await City.deleteMany();
   const france = new Country({
     name: "France",
     uuid: uuidv4(),
