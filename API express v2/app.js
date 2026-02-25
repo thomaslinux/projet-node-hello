@@ -56,18 +56,30 @@ async function database() {
     country: france._id,
   });
   await toulouse.save();
+
+  const rennes = new City({
+    name: "Rennes",
+    uuid: uuidv4(),
+    country: france._id,
+  });
+  await rennes.save();
+
   france.cities.push(toulouse);
+  france.cities.push(rennes);
   await france.save();
 
-  Country.findOne({ name: "France" })
-    .populate("cities")
-    .then((country) => {
-      console.log("Country", country);
-      console.log("Country cities", country.cities);
-    })
-    .catch((err) => {
-      console.log("no country");
-    });
+  await City.aggregate([
+    {
+      $lookup: {
+        from: "Country",
+        localField: "country",
+        foreignField: "_id",
+        as: "CountryData",
+      },
+    },
+  ]).then((cities) => {
+    console.log("cities: ", cities);
+  });
 }
 
 database();
