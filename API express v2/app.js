@@ -96,16 +96,15 @@ app.post("/cities/:uuid/delete", async (req, res) => {
     });
 });
 
-(app.post("/cities/:uuid/update"),
-  async (req, res) => {
-    await db.collection("cities").updateOne(
-      { uuid: req.params.uuid },
-      {
-        $set: { name: req.body.city },
-      },
-    );
-    res.redirect("/cities");
-  });
+app.post("/cities/:uuid/update", async (req, res) => {
+  await db.collection("cities").updateOne(
+    { uuid: req.params.uuid },
+    {
+      $set: { name: req.body.city },
+    },
+  );
+  res.redirect("/cities");
+});
 
 // Cas d'erreurs
 app.use((req, res) => {
