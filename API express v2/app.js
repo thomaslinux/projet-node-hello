@@ -131,13 +131,17 @@ app.post(
 );
 
 app.get("/cities/:uuid", (req, res) => {
-  City.findOne({ uuid: req.params.uuid }).then((city) => {
-    if (city) {
-      res.render("cities/city", { city: city });
-    } else {
-      res.status(404).send("Ville non trouvée, pas de ville avec cet uuid");
-    }
-  });
+  City.findOne({ uuid: req.params.uuid })
+    .populate("country")
+    .then((city) => {
+      console.log("détails ", city);
+
+      if (city) {
+        res.render("cities/city", { city: city });
+      } else {
+        res.status(404).send("Ville non trouvée, pas de ville avec cet uuid");
+      }
+    });
 });
 
 app.post("/cities/:uuid/delete", async (req, res) => {
