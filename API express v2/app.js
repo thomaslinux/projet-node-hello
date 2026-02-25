@@ -38,11 +38,13 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-const cities = "Nantes, Rennes, Lorient, Bordeaux, Quimper".split(", ");
-
 app.get("/cities", (req, res) => {
-  // res.send(cities.join(", "))
-  res.render("cities/index", { cities: cities });
+  db.collection("cities")
+    .find()
+    .toArray()
+    .then((cities) => {
+      res.render("cities/index", { cities: cities });
+    });
 });
 
 app.post(
