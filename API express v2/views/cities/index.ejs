@@ -13,7 +13,9 @@
   <ul>
     <% cities.forEach(
             (city) => { %>
-    <li><%= city.name %></li>
+    <li>
+    <a href="/cities/<%= city.uuid %>"><%= city.name %></a>
+    </li>
     <% }); %>
   </ul>
   <!-- views/index.ejs -->
