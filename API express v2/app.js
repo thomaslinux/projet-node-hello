@@ -43,6 +43,7 @@ app.get("/cities", (req, res) => {
     .find()
     .toArray()
     .then((cities) => {
+      console.log(cities);
       res.render("cities/index", { cities: cities });
     });
 });
