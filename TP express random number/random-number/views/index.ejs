@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
-    <link
+    <!-- <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
-    />
+    /> -->
   </head>
   <body>
     <main>
@@ -32,7 +32,12 @@
           />
           <button class="btn btn-primary" type="submit">Proposer</button>
           <div class="text-danger">
-            <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+            <% if (typeof errors !== 'undefined' && errors.length > 0 && errors[0].msg !== "Bravo!") { %>
+            <%= errors[0].msg %>
+            <% } %>
+          </div>
+          <div class="text-success">
+            <% if (typeof errors !== 'undefined' && errors.length > 0 && errors[0].msg === "Bravo!") { %>
             <%= errors[0].msg %>
             <% } %>
           </div>

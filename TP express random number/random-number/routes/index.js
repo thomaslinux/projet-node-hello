@@ -4,14 +4,13 @@ var router = express.Router();
 const { body, validationResult } = require("express-validator");
 const MAX = 100;
 const MIN = 0;
-let random = Math.floor(Math.random() * (MAX - MIN) + MIN);
-const numberToFind = random;
+let numberToFind = Math.floor(Math.random() * (MAX - MIN) + MIN);
 
 let numberFound = false;
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  console.log(numberToFind);
+  console.log("number to find : " + numberToFind);
   res.render("index", {
     title: "Express Brains",
     lastNumberInput: lastNumberInput,
@@ -31,7 +30,8 @@ router.post(
       throw new Error("Trop haut");
     }
     if (parseInt(value) == numberToFind) {
-      throw new Error("Bravo");
+      numberToFind = Math.floor(Math.random() * (MAX - MIN) + MIN);
+      throw new Error("Bravo!");
     }
     return true;
   }),
