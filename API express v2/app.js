@@ -64,6 +64,9 @@ async function database() {
     .then((country) => {
       console.log("Country", country);
       console.log("Country cities", country.cities);
+    })
+    .catch((err) => {
+      console.log("no country");
     });
 }
 
