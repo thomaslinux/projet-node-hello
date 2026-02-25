@@ -50,13 +50,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/cities", (req, res) => {
-  db.collection("cities")
-    .find()
-    .toArray()
-    .then((cities) => {
-      console.log(cities);
-      res.render("cities/index", { cities: cities });
-    });
+  City.find().then((cities) => {
+    console.log(cities);
+    res.render("cities/index", { cities: cities });
+  });
 });
 
 app.post(
