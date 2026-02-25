@@ -58,6 +58,13 @@ async function database() {
   await toulouse.save();
   france.cities.push(toulouse);
   await france.save();
+
+  Country.findOne({ name: "France" })
+    .populate("cities")
+    .then((country) => {
+      console.log("Country", country);
+      console.log("Country cities", country.cities);
+    });
 }
 
 database();
