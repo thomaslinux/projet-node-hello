@@ -30,6 +30,7 @@ const City = mongoose.model("City", {
     ref: "Country",
   },
 });
+
 const Country = mongoose.model("Country", {
   name: String,
   uuid: String,
@@ -40,6 +41,24 @@ const Country = mongoose.model("Country", {
     },
   ],
 });
+
+async function database() {
+  const france = new Country({
+    name: "France",
+    uuid: uuidv4(),
+  });
+
+  const toulouse = new City({
+    name: "Toulouse",
+    uuid: uuidv4(),
+    country: france._id,
+  });
+  await toulouse.save();
+  france.cities.push(toulouse);
+  await france.save();
+}
+
+database();
 
 client
   .connect()
