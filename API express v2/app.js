@@ -71,7 +71,7 @@ app.post(
         city: req.body.city,
       });
     }
-    await db.collection("cities").insertOne({
+    await City.create({
       name: req.body.city,
       uuid: uuidv4(),
     });
@@ -80,36 +80,27 @@ app.post(
 );
 
 app.get("/cities/:uuid", (req, res) => {
-  db.collection("cities")
-    .findOne({ uuid: req.params.uuid })
-    .then((city) => {
-      if (city) {
-        res.render("cities/city", { city: city });
-      } else {
-        res.status(404).send("Ville non trouvée, pas de ville avec cet uuid");
-      }
-    });
+  City.findOne({ uuid: req.params.uuid }).then((city) => {
+    if (city) {
+      res.render("cities/city", { city: city });
+    } else {
+      res.status(404).send("Ville non trouvée, pas de ville avec cet uuid");
+    }
+  });
 });
 
 app.post("/cities/:uuid/delete", async (req, res) => {
-  await db
-    .collection("cities")
-    .deleteOne({ uuid: req.params.uuid })
-    .then((response) => {
-      if (response.deletedCount === 1) {
-        res.redirect("/cities");
-      } else {
-        res.status(404).send("404: ville à supprimer non trouvée");
-      }
-    });
+  await City.findOneAndDelete(
+    { uuid: req.params.uuid },
+    { name: req.body.city },
+  );
+  res.redirect("/cities");
 });
 
 app.post("/cities/:uuid/update", async (req, res) => {
-  await db.collection("cities").updateOne(
+  await City.findOneAndUpdate(
     { uuid: req.params.uuid },
-    {
-      $set: { name: req.body.city },
-    },
+    { name: req.body.name },
   );
   res.redirect("/cities");
 });
