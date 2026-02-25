@@ -8,6 +8,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 const { v4: uuidv4 } = require("uuid");
 const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 
 const uri = "mongodb://localhost:27017/city-app";
 const client = new MongoClient(uri);
