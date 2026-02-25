@@ -63,7 +63,6 @@ app.post(
         city: req.body.city,
       });
     }
-    cities.push(req.body.city);
     await db.collection("cities").insertOne({
       name: req.body.city,
       uuid: uuidv4(),
