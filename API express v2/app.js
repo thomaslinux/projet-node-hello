@@ -83,8 +83,9 @@ app.get("/cities/:uuid", (req, res) => {
     });
 });
 
-app.post("/cities/:uuid/delete", (req, res) => {
-  db.collection("cities")
+app.post("/cities/:uuid/delete", async (req, res) => {
+  await db
+    .collection("cities")
     .deleteOne({ uuid: req.params.uuid })
     .then((response) => {
       if (response.deletedCount === 1) {
