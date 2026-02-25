@@ -6,6 +6,11 @@ const app = express();
 const port = 3000;
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+const { v4: uuidv4 } = require("uuid");
+const { MongoClient } = require("mongodb");
+
+const uri = "mongodb://localhost:27017/city-app";
+const client = new MongoClient(uri, { useNewUrlParser: true });
 
 app.use((req, res, next) => {
   console.log(
