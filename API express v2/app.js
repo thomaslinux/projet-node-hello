@@ -71,11 +71,14 @@ async function database() {
   await City.aggregate([
     {
       $lookup: {
-        from: "Country",
+        from: "countries",
         localField: "country",
         foreignField: "_id",
-        as: "CountryData",
+        as: "countryData",
       },
+    },
+    {
+      $unwind: "$countryData",
     },
   ]).then((cities) => {
     console.log("cities: ", cities);
