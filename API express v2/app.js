@@ -83,6 +83,18 @@ app.get("/cities/:uuid", (req, res) => {
     });
 });
 
+app.post("/cities/:uuid/delete", (req, res) => {
+  db.collection("cities")
+    .deleteOne({ uuid: req.params.uuid })
+    .then((response) => {
+      if (response.deletedCount === 1) {
+        res.redirect("/cities");
+      } else {
+        res.status(404).send("404: ville à supprimer non trouvée");
+      }
+    });
+});
+
 // Cas d'erreurs
 app.use((req, res) => {
   res.status(404).send("404: page non trouvée");
