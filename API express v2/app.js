@@ -64,18 +64,21 @@ app.post(
     .withMessage("City must be at least 3 characters long"),
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).render("cities.ejs", {
-        errors: errors.array(),
-        cities: cities,
-        city: req.body.city,
+
+    await City.find().then((cities) => {
+      if (!errors.isEmpty()) {
+        return res.status(422).render("cities.ejs", {
+          errors: errors.array(),
+          cities: cities,
+          city: req.body.city,
+        });
+      }
+      City.create({
+        name: req.body.city,
+        uuid: uuidv4(),
       });
-    }
-    await City.create({
-      name: req.body.city,
-      uuid: uuidv4(),
+      res.redirect("/cities");
     });
-    res.redirect("/cities");
   },
 );
 
