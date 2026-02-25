@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require("uuid");
 const { MongoClient } = require("mongodb");
 
 const uri = "mongodb://localhost:27017/city-app";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+const client = new MongoClient(uri);
 const db = client.db("city-app");
 
 client
