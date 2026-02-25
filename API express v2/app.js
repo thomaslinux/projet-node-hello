@@ -61,6 +61,10 @@ app.post(
       });
     }
     cities.push(req.body.city);
+    db.collection("cities").insertOne({
+      name: req.body.city,
+      uuid: uuidv4(),
+    });
     res.redirect("/cities");
   },
 );
