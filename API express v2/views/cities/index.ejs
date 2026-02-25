@@ -15,7 +15,7 @@
     <% cities.forEach( (city)=> { %>
       <li>
         <%= city.name %>
-        <form action="/cities/<%= city.uuid%>/delete" method="POST">
+          <form action="/cities/<%= city.uuid%>/delete" method="POST">
             <a class="btn btn-primary" href="/cities/<%= city.uuid %>">Détails</a>
             <button class="btn btn-danger">Supprimer</button>
           </form>
@@ -36,7 +36,7 @@
             <% } %>
       </div>
     </div>
-    <button class="btn btn-primary">Submit</button>
+    <button class="btn btn-primary">Ajouter la ville</button>
   </form>
 </body>
 
