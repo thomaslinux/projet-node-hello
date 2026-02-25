@@ -71,11 +71,16 @@ app.post(
   },
 );
 
-app.get("/cities/:id", (req, res) => {
-  if (req.params.id < 1 || req.params.id > cities.length) {
-    return res.status(404).send("Ville non trouvée");
-  }
-  res.send(cities[req.params.id - 1]);
+app.get("/cities/:uuid", (req, res) => {
+  db.collection("cities")
+    .findOne({ uuid: req.params.uuid })
+    .then((city) => {
+      if (city) {
+        res.render("cities/city", { city: city });
+      } else {
+        res.status(404).send("Ville non trouvée, pas de ville avec cet uuid");
+      }
+    });
 });
 
 // Cas d'erreurs
