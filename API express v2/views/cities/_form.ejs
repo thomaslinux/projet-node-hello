@@ -1,0 +1,13 @@
+<div class="mb-3">
+    <label for="city" class="form-label">City
+    </label>
+    <input id="city" name="city"
+        class="form-control <%= typeof errors !== 'undefined' && errors.length > 0 ? 'is-invalid' : '' %>" type="text"
+        value="<%= typeof city !== 'undefined' ? city : '' %>" autofocus>
+    <div class="invalid-feedback">
+        <% if (typeof errors !=='undefined' && errors.length> 0) { %>
+            <%= errors[0].msg %>
+                <% } %>
+    </div>
+</div>
+<button class="btn btn-primary">Ajouter la ville</button>
