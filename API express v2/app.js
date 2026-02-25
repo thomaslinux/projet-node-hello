@@ -51,7 +51,7 @@ app.post(
     .trim()
     .isLength({ min: 3, max: 255 })
     .withMessage("City must be at least 3 characters long"),
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).render("cities.ejs", {
@@ -61,7 +61,7 @@ app.post(
       });
     }
     cities.push(req.body.city);
-    db.collection("cities").insertOne({
+    await db.collection("cities").insertOne({
       name: req.body.city,
       uuid: uuidv4(),
     });
