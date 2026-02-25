@@ -22,6 +22,8 @@ mongoose
     console.log("erreur de connexion : ", err);
   });
 
+const City = mongoose.model("City", { name: String, uuid: String });
+
 client
   .connect()
   .then(() => {
