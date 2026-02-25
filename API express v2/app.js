@@ -22,7 +22,24 @@ mongoose
     console.log("erreur de connexion : ", err);
   });
 
-const City = mongoose.model("City", { name: String, uuid: String });
+const City = mongoose.model("City", {
+  name: String,
+  uuid: String,
+  country: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Country",
+  },
+});
+const Country = mongoose.model("Country", {
+  name: String,
+  uuid: String,
+  cities: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "City",
+    },
+  ],
+});
 
 client
   .connect()
