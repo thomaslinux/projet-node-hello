@@ -103,7 +103,7 @@ app.post("/cities/:uuid/delete", async (req, res) => {
 app.post("/cities/:uuid/update", async (req, res) => {
   await City.findOneAndUpdate(
     { uuid: req.params.uuid },
-    { name: req.body.name },
+    { name: req.body.city },
   );
   res.redirect("/cities");
 });
