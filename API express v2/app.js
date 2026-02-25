@@ -11,6 +11,16 @@ const { MongoClient } = require("mongodb");
 
 const uri = "mongodb://localhost:27017/city-app";
 const client = new MongoClient(uri, { useNewUrlParser: true });
+const db = client.db("city-app");
+
+client
+  .connect()
+  .then(() => {
+    console.log("Connexion réussie");
+  })
+  .catch((err) => {
+    console.log("connexion échouée: ", err);
+  });
 
 app.use((req, res, next) => {
   console.log(
