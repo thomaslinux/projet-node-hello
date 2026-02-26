@@ -42,6 +42,69 @@ const Country = mongoose.model("Country", {
   ],
 });
 
+const Role = mongoose.model("Role", {
+  name: String,
+  uuid: String,
+  users: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+});
+
+const User = mongoose.model("User", {
+  pseudo: String,
+  firstname: String,
+  uuid: String,
+  role: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Role",
+  },
+});
+
+async function databaseUsers() {
+  await Role.deleteMany();
+  await User.deleteMany();
+
+  const thomaslinux9 = new User({
+    pseudo: "thomaslinux9",
+    firstname: "Thomas",
+    uuid: uuidv4(),
+    role: admin._id,
+  });
+
+  const mauditbutin = new User({
+    pseudo: "mauditbutin",
+    firstname: "Maud",
+    uuid: uuidv4(),
+    role: dev._id,
+  });
+
+  const vanina = new User({
+    pseudo: "vanina",
+    firstname: "Vanina",
+    uuid: uuidv4(),
+    role: User._id,
+  });
+
+  const admin = new Role({
+    name: "Admin",
+    uuid: uuidv4(),
+  });
+
+  const dev = new Role({
+    name: "Developpeur",
+    uuid: uuidv4(),
+  });
+
+  const user = new Role({
+    name: "Utilisateur",
+    uuid: uuidv4(),
+  });
+}
+databaseUsers();
+
 async function database() {
   await Country.deleteMany();
   await City.deleteMany();
