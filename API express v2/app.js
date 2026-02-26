@@ -1,6 +1,6 @@
 "use strict";
 
-const { body, validationResult } = require("express-validator");
+const { body, validationResult, check } = require("express-validator");
 const express = require("express");
 const app = express();
 const port = 3000;
@@ -209,6 +209,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -260,18 +262,17 @@ app.post(
 
 app.post(
   "/cities",
-  body("city")
+  check("name")
     .trim()
     .isLength({ min: 3, max: 255 })
     .withMessage("City must be at least 3 characters long"),
   async (req, res) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.status(422).json(errors.array());
     }
     const city = await City.create({
-      name: req.body.city,
+      name: req.body.name,
       uuid: uuidv4(),
     });
     return res.status(201).json(city);
