@@ -24,10 +24,11 @@
             <% users.forEach( (user)=> { %>
                 <tr>
                     <td>
-                        <a href="/role/<%= user.role.uuid %>/users">
+                        <%= user.role.name %>
+                            <a href="/role/<%= user.role.alias %>/users">
+                                (<%= user.role.alias %>)
 
-                            <%= user.role.name %>
-                        </a>
+                            </a>
                     </td>
                     <td>
                         <%= user.pseudo %>

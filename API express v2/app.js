@@ -44,6 +44,7 @@ const Country = mongoose.model("Country", {
 
 const Role = mongoose.model("Role", {
   name: String,
+  alias: String,
   uuid: String,
   users: [
     {
@@ -69,16 +70,19 @@ async function databaseUsers() {
 
   const admin = new Role({
     name: "Admin",
+    alias: "admin",
     uuid: uuidv4(),
   });
 
   const dev = new Role({
     name: "Developpeur",
+    alias: "dev",
     uuid: uuidv4(),
   });
 
   const user = new Role({
     name: "Utilisateur",
+    alias: "user",
     uuid: uuidv4(),
   });
 
@@ -289,8 +293,8 @@ app.post("/cities/:uuid/update", async (req, res) => {
   res.redirect("/cities");
 });
 
-app.get("/role/:uuid/users", async (req, res) => {
-  const role = await Role.findOne({ uuid: req.params.uuid });
+app.get("/role/:alias/users", async (req, res) => {
+  const role = await Role.findOne({ alias: req.params.alias });
   await User.aggregate([
     {
       $lookup: {
@@ -304,7 +308,7 @@ app.get("/role/:uuid/users", async (req, res) => {
       $unwind: "$role",
     },
     {
-      $match: { "role.uuid": req.params.uuid },
+      $match: { "role.alias": req.params.alias },
     },
   ]).then((users) => {
     console.log("liste des utilisateurs de ", role.name, users);
