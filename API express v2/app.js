@@ -275,11 +275,12 @@ app.post(
           city: req.body.city,
         });
       }
-      City.create({
+      const city = City.create({
         name: req.body.city,
         uuid: uuidv4(),
       });
-      res.redirect("/cities");
+      // res.redirect("/cities");
+      return res.status(201).json();
     });
   },
 );
