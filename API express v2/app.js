@@ -51,11 +51,6 @@ async function database() {
     uuid: uuidv4(),
   });
 
-  const allemagne = new Country({
-    name: "Allemagne",
-    uuid: uuidv4(),
-  });
-
   const toulouse = new City({
     name: "Toulouse",
     uuid: uuidv4(),
@@ -74,11 +69,20 @@ async function database() {
   france.cities.push(rennes);
   await france.save();
 
+  const allemagne = new Country({
+    name: "Allemagne",
+    uuid: uuidv4(),
+  });
+
   const berlin = new City({
     name: "Berlin",
     uuid: uuidv4(),
     country: allemagne._id,
   });
+  await berlin.save();
+
+  allemagne.cities.push(berlin);
+  await allemagne.save();
 
   await City.aggregate([
     {
