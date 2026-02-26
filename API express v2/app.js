@@ -199,6 +199,7 @@ app.post("/cities/:uuid/update", async (req, res) => {
 });
 
 app.get("/countries/:uuid/cities", async (req, res) => {
+  const country = await Country.findOne({ uuid: req.params.uuid });
   await City.aggregate([
     {
       $lookup: {
@@ -216,7 +217,7 @@ app.get("/countries/:uuid/cities", async (req, res) => {
     },
   ]).then((cities) => {
     console.log("liste des villes du pays", cities);
-    res.render("cities/index", { cities: cities });
+    res.render("countries/cities", { cities: cities, country: country });
   });
 });
 
