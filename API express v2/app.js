@@ -102,7 +102,7 @@ async function databaseUsers() {
     pseudo: "clara",
     firstname: "Clara",
     uuid: uuidv4(),
-    role: User._id,
+    role: user._id,
   });
   await clara.save();
 
@@ -210,7 +210,12 @@ app.get("/cities", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-  User.find().populate("role").then;
+  User.find()
+    .populate("role")
+    .then((users) => {
+      console.log(users);
+      res.render("users/index", { users: users });
+    });
 });
 
 app.post(
@@ -273,6 +278,29 @@ app.post("/cities/:uuid/update", async (req, res) => {
     { name: req.body.city },
   );
   res.redirect("/cities");
+});
+
+app.get("/role/:uuid/users", async (req, res) => {
+  const role = await Role.findOne({ uuid: req.params.uuid });
+  await User.aggregate([
+    {
+      $lookup: {
+        from: "roles",
+        localField: "role",
+        foreignField: "_id",
+        as: "role",
+      },
+    },
+    {
+      $unwind: "$role",
+    },
+    {
+      $match: { "role.uuid": req.params.uuid },
+    },
+  ]).then((users) => {
+    console.log("liste des utilisateurs de ", role.name, users);
+    res.render("roles/index", { users: users, role: role });
+  });
 });
 
 app.get("/countries/:uuid/cities", async (req, res) => {
