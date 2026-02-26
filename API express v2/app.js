@@ -11,7 +11,15 @@ const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 const { name } = require("ejs");
 const jwt = require("jsonwebtoken");
-const { SECRET } = require("./env");
+const { SECRET } = require("dotenv");
+
+const users = [
+  {
+    id: 1,
+    username: "admin",
+    password: "admin",
+  },
+];
 
 const uri = "mongodb://localhost:27017/city-app";
 const client = new MongoClient(uri);
