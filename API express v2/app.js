@@ -129,10 +129,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/cities", (req, res) => {
-  City.find().then((cities) => {
-    console.log(cities);
-    res.render("cities/index", { cities: cities });
-  });
+  City.find()
+    .populate("country")
+    .then((cities) => {
+      console.log(cities);
+      res.render("cities/index", { cities: cities });
+    });
 });
 
 app.post(
