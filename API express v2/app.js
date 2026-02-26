@@ -100,7 +100,6 @@ async function database() {
     console.log("cities: ", cities);
   });
 }
-
 database();
 
 client
@@ -177,14 +176,6 @@ app.get("/cities/:uuid", (req, res) => {
     });
 });
 
-app.get("countries/:uuid/cities", async (req, res) => {
-  await Country.findOne({ uuid: req.params.uuid })
-    .populate("cities")
-    .then((country) => {
-      console.log("détails", country);
-    });
-});
-
 app.get("/countries", async (req, res) => {
   await Country.find().then((countries) => {
     res.render("countries/index", { countries: countries });
@@ -205,6 +196,28 @@ app.post("/cities/:uuid/update", async (req, res) => {
     { name: req.body.city },
   );
   res.redirect("/cities");
+});
+
+app.get("/countries/:uuid/cities", async (req, res) => {
+  await City.aggregate([
+    {
+      $lookup: {
+        from: "countries",
+        localField: "country",
+        foreignField: "_id",
+        as: "country",
+      },
+    },
+    {
+      $unwind: "$country",
+    },
+    {
+      $match: { "country.uuid": req.params.uuid },
+    },
+  ]).then((cities) => {
+    console.log("liste des villes du pays", cities);
+    res.render("cities/index", { cities: cities });
+  });
 });
 
 // Cas d'erreurs
