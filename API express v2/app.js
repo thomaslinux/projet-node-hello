@@ -67,27 +67,6 @@ async function databaseUsers() {
   await Role.deleteMany();
   await User.deleteMany();
 
-  const thomaslinux9 = new User({
-    pseudo: "thomaslinux9",
-    firstname: "Thomas",
-    uuid: uuidv4(),
-    role: admin._id,
-  });
-
-  const mauditbutin = new User({
-    pseudo: "mauditbutin",
-    firstname: "Maud",
-    uuid: uuidv4(),
-    role: dev._id,
-  });
-
-  const vanina = new User({
-    pseudo: "vanina",
-    firstname: "Vanina",
-    uuid: uuidv4(),
-    role: User._id,
-  });
-
   const admin = new Role({
     name: "Admin",
     uuid: uuidv4(),
@@ -102,6 +81,37 @@ async function databaseUsers() {
     name: "Utilisateur",
     uuid: uuidv4(),
   });
+
+  const thomaslinux9 = new User({
+    pseudo: "thomaslinux9",
+    firstname: "Thomas",
+    uuid: uuidv4(),
+    role: admin._id,
+  });
+  await thomaslinux9.save();
+
+  const mauditbutin = new User({
+    pseudo: "mauditbutin",
+    firstname: "Maud",
+    uuid: uuidv4(),
+    role: dev._id,
+  });
+  await mauditbutin.save();
+
+  const clara = new User({
+    pseudo: "clara",
+    firstname: "Clara",
+    uuid: uuidv4(),
+    role: User._id,
+  });
+  await clara.save();
+
+  admin.users.push(thomaslinux9);
+  dev.users.push(mauditbutin);
+  user.users.push(clara);
+  await admin.save();
+  await dev.save();
+  await user.save();
 }
 databaseUsers();
 
@@ -197,6 +207,10 @@ app.get("/cities", (req, res) => {
       console.log(cities);
       res.render("cities/index", { cities: cities });
     });
+});
+
+app.get("/users", (req, res) => {
+  User.find().populate("role").then;
 });
 
 app.post(
