@@ -227,6 +227,24 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.post("/authentication_token", async (req, res, next) => {
+  const user = users.find(
+    (u) => u.username === req.body.username && u.password === req.body.password,
+  );
+  if (!user) {
+    return res.status(400).json({ message: "Mauvais login et mot de passe" });
+  }
+  const token = jwt.sign(
+    {
+      id: user.id,
+      username: user.username,
+    },
+    SECRET,
+    { expiresIn: "3 hours" },
+  );
+  return res.json({ access_token: token });
+});
+
 app.get("/cities", (req, res) => {
   City.find()
     .populate("country")
