@@ -193,6 +193,12 @@ app.post("/cities/:uuid/update", async (req, res) => {
   res.redirect("/cities");
 });
 
+app.get("/countries", async (req, res) => {
+  await Country.find().then((countries) => {
+    res.render("countries/index", { countries: countries });
+  });
+});
+
 // Cas d'erreurs
 app.use((req, res) => {
   res.status(404).send("404: page non trouvée");
