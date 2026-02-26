@@ -177,6 +177,20 @@ app.get("/cities/:uuid", (req, res) => {
     });
 });
 
+app.get("countries/:uuid/cities", async (req, res) => {
+  await Country.findOne({ uuid: req.params.uuid })
+    .populate("cities")
+    .then((country) => {
+      console.log("détails", country);
+    });
+});
+
+app.get("/countries", async (req, res) => {
+  await Country.find().then((countries) => {
+    res.render("countries/index", { countries: countries });
+  });
+});
+
 app.post("/cities/:uuid/delete", async (req, res) => {
   await City.findOneAndDelete(
     { uuid: req.params.uuid },
@@ -191,12 +205,6 @@ app.post("/cities/:uuid/update", async (req, res) => {
     { name: req.body.city },
   );
   res.redirect("/cities");
-});
-
-app.get("/countries", async (req, res) => {
-  await Country.find().then((countries) => {
-    res.render("countries/index", { countries: countries });
-  });
 });
 
 // Cas d'erreurs
