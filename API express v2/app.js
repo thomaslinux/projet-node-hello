@@ -232,6 +232,32 @@ app.get("/users", (req, res) => {
 });
 
 app.post(
+  "/users",
+  body("user")
+    .trim()
+    .isLength({ min: 3, max: 255 })
+    .withMessage("user must be at least 3 characters long"),
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    await User.find().then((users) => {
+      if (!errors.isEmpty()) {
+        return res.status(422).render("users.ejs", {
+          errors: errors.array(),
+          users: users,
+          user: req.body.user,
+        });
+      }
+      User.create({
+        pseudo: req.body.user,
+        uuid: uuidv4(),
+      });
+      res.redirect("/users");
+    });
+  },
+);
+
+app.post(
   "/cities",
   body("city")
     .trim()

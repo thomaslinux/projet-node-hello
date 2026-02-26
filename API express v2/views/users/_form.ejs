@@ -1,0 +1,20 @@
+<div class="mb-3">
+    <label for="role" class="form-label">Role</label>
+    <select id="role" name="role">
+        <% role.forEach ( (role )=> { %>
+            <option value="role.alias"></option>
+            <% }); %>
+    </select>
+
+    <label for="user" class="form-label">User
+    </label>
+    <input id="user" name="user"
+        class="form-control <%= typeof errors !== 'undefined' && errors.length > 0 ? 'is-invalid' : '' %>" type="text"
+        value="<%= typeof user !== 'undefined' ? user.pseudo : '' %>" autofocus>
+    <div class="invalid-feedback">
+        <% if (typeof errors !=='undefined' && errors.length> 0) { %>
+            <%= errors[0].msg %>
+                <% } %>
+    </div>
+</div>
+<button class="btn btn-primary">Submit</button>

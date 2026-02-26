@@ -24,11 +24,14 @@
             <% users.forEach( (user)=> { %>
                 <tr>
                     <td>
-                        <%= user.role.name %>
-                            <a href="/role/<%= user.role.alias %>/users">
-                                (<%= user.role.alias %>)
+                        <% if (user.role) { %>
 
-                            </a>
+                            <%= user.role ? user.role.name : '' %>
+                                <a href="/role/<%= user.role.alias %>/users">
+                                    (<%= user.role.alias %>)
+
+                                </a>
+                                <% } %>
                     </td>
                     <td>
                         <%= user.pseudo %>
@@ -40,6 +43,9 @@
                 <% }); %>
         </tbody>
     </table>
+    <form method="post" action="/users">
+        <%- include('_form') %>
+    </form>
     <a href="/cities">Liste des villes</a>
 </body>
 
