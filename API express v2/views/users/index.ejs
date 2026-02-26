@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des utilisateurs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+</head>
+
+<body class="container">
+    <h1>My users</h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>pseudo</th>
+                <th>firstname</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach( (user)=> { %>
+                <tr>
+                    <td>
+                        <a href="/role/<%= user.role.uuid %>/users">
+
+                            <%= user.role.name %>
+                        </a>
+                    </td>
+                    <td>
+                        <%= user.pseudo %>
+                    </td>
+                    <td>
+                        <%= user.firstname %>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+    <a href="/cities">Liste des villes</a>
+</body>
+
+</html>
