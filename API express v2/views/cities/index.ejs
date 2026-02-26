@@ -25,7 +25,7 @@
       <% cities.forEach( (city)=> { %>
         <tr>
           <td>
-            <%= city.country.name %>
+            <%= city.country ? city.country.name : '' %>
           </td>
           <td>
             <%= city.name %>
