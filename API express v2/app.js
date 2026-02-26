@@ -106,9 +106,18 @@ async function databaseUsers() {
   });
   await clara.save();
 
-  admin.users.push(thomaslinux9);
-  dev.users.push(mauditbutin);
-  user.users.push(clara);
+  const mathilde = new User({
+    pseudo: "mathilde",
+    firstname: "Mathilde",
+    uuid: uuidv4(),
+    role: user._id,
+  });
+  await mathilde.save();
+
+  // admin.users.push(thomaslinux9);
+  // dev.users.push(mauditbutin);
+  // user.users.push(clara);
+  // user.users.push(mathilde);
   await admin.save();
   await dev.save();
   await user.save();
