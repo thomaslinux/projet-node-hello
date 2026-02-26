@@ -218,7 +218,8 @@ app.get("/cities", (req, res) => {
     .populate("country")
     .then((cities) => {
       console.log(cities);
-      res.render("cities/index", { cities: cities });
+      // res.render("cities/index", { cities: cities });
+      res.json(cities);
     });
 });
 
