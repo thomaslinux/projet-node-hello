@@ -267,21 +267,14 @@ app.post(
   async (req, res) => {
     const errors = validationResult(req);
 
-    await City.find().then((cities) => {
-      if (!errors.isEmpty()) {
-        return res.status(422).render("cities.ejs", {
-          errors: errors.array(),
-          cities: cities,
-          city: req.body.city,
-        });
-      }
-      const city = City.create({
-        name: req.body.city,
-        uuid: uuidv4(),
-      });
-      // res.redirect("/cities");
-      return res.status(201).json();
+    if (!errors.isEmpty()) {
+      return res.status(422).json(errors.array());
+    }
+    const city = await City.create({
+      name: req.body.city,
+      uuid: uuidv4(),
     });
+    return res.status(201).json(city);
   },
 );
 
