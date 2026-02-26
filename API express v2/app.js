@@ -45,8 +45,14 @@ const Country = mongoose.model("Country", {
 async function database() {
   await Country.deleteMany();
   await City.deleteMany();
+
   const france = new Country({
     name: "France",
+    uuid: uuidv4(),
+  });
+
+  const allemagne = new Country({
+    name: "Allemagne",
     uuid: uuidv4(),
   });
 
@@ -67,6 +73,12 @@ async function database() {
   france.cities.push(toulouse);
   france.cities.push(rennes);
   await france.save();
+
+  const berlin = new City({
+    name: "Berlin",
+    uuid: uuidv4(),
+    country: allemagne._id,
+  });
 
   await City.aggregate([
     {
