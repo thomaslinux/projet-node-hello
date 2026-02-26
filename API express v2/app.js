@@ -217,7 +217,6 @@ app.get("/cities", (req, res) => {
   City.find()
     .populate("country")
     .then((cities) => {
-      console.log(cities);
       // res.render("cities/index", { cities: cities });
       res.json(cities);
     });
@@ -227,7 +226,6 @@ app.get("/users", (req, res) => {
   User.find()
     .populate("role")
     .then((users) => {
-      console.log(users);
       res.render("users/index", { users: users });
     });
 });
@@ -290,8 +288,6 @@ app.get("/cities/:uuid", (req, res) => {
   City.findOne({ uuid: req.params.uuid })
     .populate("country")
     .then((city) => {
-      console.log("détails ", city);
-
       if (city) {
         res.render("cities/city", { city: city });
       } else {
@@ -340,7 +336,6 @@ app.get("/role/:alias/users", async (req, res) => {
       $match: { "role.alias": req.params.alias },
     },
   ]).then((users) => {
-    console.log("liste des utilisateurs de ", role.name, users);
     res.render("roles/index", { users: users, role: role });
   });
 });
@@ -363,7 +358,6 @@ app.get("/countries/:uuid/cities", async (req, res) => {
       $match: { "country.uuid": req.params.uuid },
     },
   ]).then((cities) => {
-    console.log("liste des villes du pays", cities);
     res.render("countries/cities", { cities: cities, country: country });
   });
 });
