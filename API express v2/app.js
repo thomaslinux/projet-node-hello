@@ -286,6 +286,26 @@ app.get("/users", (req, res) => {
 });
 
 app.post(
+  "/cities",
+  checkTokenMiddleware,
+  check("name")
+    .trim()
+    .isLength({ min: 3, max: 255 })
+    .withMessage("City must be at least 3 characters long"),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json(errors.array());
+    }
+    const city = await City.create({
+      name: req.body.name,
+      uuid: uuidv4(),
+    });
+    return res.status(201).json(city);
+  },
+);
+
+app.post(
   "/users",
   body("user")
     .trim()
@@ -310,26 +330,6 @@ app.post(
         });
         res.redirect("/users");
       });
-  },
-);
-
-app.post(
-  "/cities",
-  checkTokenMiddleware,
-  check("name")
-    .trim()
-    .isLength({ min: 3, max: 255 })
-    .withMessage("City must be at least 3 characters long"),
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json(errors.array());
-    }
-    const city = await City.create({
-      name: req.body.name,
-      uuid: uuidv4(),
-    });
-    return res.status(201).json(city);
   },
 );
 
