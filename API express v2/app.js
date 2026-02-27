@@ -11,7 +11,7 @@ const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 const { name } = require("ejs");
 const jwt = require("jsonwebtoken");
-const { SECRET } = require("dotenv");
+const { SECRET } = require("./dotenv");
 const swaggerUi = require("swagger-ui-express"); // générer l'interface à partir du fichier swagger
 const swaggerDocument = require("./swagger_output.json");
 
@@ -222,6 +222,8 @@ app.get("/", (req, res) => {
 });
 
 function extractBearerToken(headerValue) {
+  console.log("extractBearerToken");
+
   if (typeof headerValue !== "string") {
     return false;
   }
@@ -230,8 +232,11 @@ function extractBearerToken(headerValue) {
 }
 
 function checkTokenMiddleware(req, res, next) {
+  console.log("checkTokenMiddleware");
+
   const token =
     req.headers.authorization && extractBearerToken(req.headers.authorization);
+
   if (!token) {
     return res.status(401).json({ message: "Il faut un token" });
   }
@@ -245,6 +250,8 @@ function checkTokenMiddleware(req, res, next) {
 }
 
 app.post("/authentication_token", async (req, res, next) => {
+  console.log("corps : ", req.body);
+
   const user = users.find(
     (u) => u.username === req.body.username && u.password === req.body.password,
   );
