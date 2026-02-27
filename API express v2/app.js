@@ -250,6 +250,12 @@ function extractBearerToken(headerValue) {
     return false;
   }
   const matches = headerValue.match(/(bearer)\s+(\S+)/i);
+  return matches && matches[2];
+}
+
+function checkTokenMiddleware(req, res, next) {
+  const token =
+    req.headers.authorization && extractBearerToken(req.headers.authorization);
 }
 
 app.get("/cities", (req, res) => {
