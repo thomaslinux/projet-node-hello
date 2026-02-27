@@ -245,6 +245,12 @@ app.post("/authentication_token", async (req, res, next) => {
   return res.json({ access_token: token });
 });
 
+function extractBearerToken(headerValue) {
+  if (typeof headerValue !== "string") {
+    return false;
+  }
+}
+
 app.get("/cities", (req, res) => {
   City.find()
     .populate("country")
