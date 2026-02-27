@@ -256,6 +256,16 @@ function extractBearerToken(headerValue) {
 function checkTokenMiddleware(req, res, next) {
   const token =
     req.headers.authorization && extractBearerToken(req.headers.authorization);
+  if (!token) {
+    return res.status(401).json({ message: "Il faut un token" });
+  }
+  jwt.verify(token, SECRET, (err, decodedToken) => {
+    if (err) {
+      res.status(401).json({ message: "Mauvais token" });
+    } else {
+      next();
+    }
+  });
 }
 
 app.get("/cities", (req, res) => {
@@ -305,6 +315,7 @@ app.post(
 
 app.post(
   "/cities",
+  checkTokenMiddleware,
   check("name")
     .trim()
     .isLength({ min: 3, max: 255 })
