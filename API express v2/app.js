@@ -12,6 +12,8 @@ const mongoose = require("mongoose");
 const { name } = require("ejs");
 const jwt = require("jsonwebtoken");
 const { SECRET } = require("dotenv");
+const swaggerUi = require("swagger-ui-express"); // générer l'interface à partir du fichier swagger
+const swaggerDocument = require("./swagger_output.json");
 
 const users = [
   {
@@ -410,6 +412,8 @@ app.get("/countries/:uuid/cities", async (req, res) => {
     res.render("countries/cities", { cities: cities, country: country });
   });
 });
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Cas d'erreurs
 app.use((req, res) => {
