@@ -66,79 +66,79 @@ const Role = mongoose.model("Role", {
   ],
 });
 
-const User = mongoose.model("User", {
-  pseudo: String,
-  firstname: String,
-  uuid: String,
-  role: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Role",
-  },
-});
+// const User = mongoose.model("User", {
+//   pseudo: String,
+//   firstname: String,
+//   uuid: String,
+//   role: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: "Role",
+//   },
+// });
 
-async function databaseUsers() {
-  await Role.deleteMany();
-  await User.deleteMany();
+// async function databaseUsers() {
+//   await Role.deleteMany();
+//   await User.deleteMany();
 
-  const admin = new Role({
-    name: "Admin",
-    alias: "admin",
-    uuid: uuidv4(),
-  });
+//   const admin = new Role({
+//     name: "Admin",
+//     alias: "admin",
+//     uuid: uuidv4(),
+//   });
 
-  const dev = new Role({
-    name: "Developpeur",
-    alias: "dev",
-    uuid: uuidv4(),
-  });
+//   const dev = new Role({
+//     name: "Developpeur",
+//     alias: "dev",
+//     uuid: uuidv4(),
+//   });
 
-  const user = new Role({
-    name: "Utilisateur",
-    alias: "user",
-    uuid: uuidv4(),
-  });
+//   const user = new Role({
+//     name: "Utilisateur",
+//     alias: "user",
+//     uuid: uuidv4(),
+//   });
 
-  const thomaslinux9 = new User({
-    pseudo: "thomaslinux9",
-    firstname: "Thomas",
-    uuid: uuidv4(),
-    role: admin._id,
-  });
-  await thomaslinux9.save();
+//   const thomaslinux9 = new User({
+//     pseudo: "thomaslinux9",
+//     firstname: "Thomas",
+//     uuid: uuidv4(),
+//     role: admin._id,
+//   });
+//   await thomaslinux9.save();
 
-  const mauditbutin = new User({
-    pseudo: "mauditbutin",
-    firstname: "Maud",
-    uuid: uuidv4(),
-    role: dev._id,
-  });
-  await mauditbutin.save();
+//   const mauditbutin = new User({
+//     pseudo: "mauditbutin",
+//     firstname: "Maud",
+//     uuid: uuidv4(),
+//     role: dev._id,
+//   });
+//   await mauditbutin.save();
 
-  const clara = new User({
-    pseudo: "clara",
-    firstname: "Clara",
-    uuid: uuidv4(),
-    role: user._id,
-  });
-  await clara.save();
+//   const clara = new User({
+//     pseudo: "clara",
+//     firstname: "Clara",
+//     uuid: uuidv4(),
+//     role: user._id,
+//   });
+//   await clara.save();
 
-  const mathilde = new User({
-    pseudo: "mathilde",
-    firstname: "Mathilde",
-    uuid: uuidv4(),
-    role: user._id,
-  });
-  await mathilde.save();
+//   const mathilde = new User({
+//     pseudo: "mathilde",
+//     firstname: "Mathilde",
+//     uuid: uuidv4(),
+//     role: user._id,
+//   });
+//   await mathilde.save();
 
-  // admin.users.push(thomaslinux9);
-  // dev.users.push(mauditbutin);
-  // user.users.push(clara);
-  // user.users.push(mathilde);
-  await admin.save();
-  await dev.save();
-  await user.save();
-}
-databaseUsers();
+//   // admin.users.push(thomaslinux9);
+//   // dev.users.push(mauditbutin);
+//   // user.users.push(clara);
+//   // user.users.push(mathilde);
+//   await admin.save();
+//   await dev.save();
+//   await user.save();
+// }
+// databaseUsers();
 
 async function database() {
   await Country.deleteMany();
@@ -277,13 +277,13 @@ app.get("/cities", (req, res) => {
     });
 });
 
-app.get("/users", (req, res) => {
-  User.find()
-    .populate("role")
-    .then((users) => {
-      res.render("users/index", { users: users });
-    });
-});
+// app.get("/users", (req, res) => {
+//   User.find()
+//     .populate("role")
+//     .then((users) => {
+//       res.render("users/index", { users: users });
+//     });
+// });
 
 app.post(
   "/cities",
@@ -305,33 +305,33 @@ app.post(
   },
 );
 
-app.post(
-  "/users",
-  body("user")
-    .trim()
-    .isLength({ min: 3, max: 255 })
-    .withMessage("user must be at least 3 characters long"),
-  async (req, res) => {
-    const errors = validationResult(req);
+// app.post(
+//   "/users",
+//   body("user")
+//     .trim()
+//     .isLength({ min: 3, max: 255 })
+//     .withMessage("user must be at least 3 characters long"),
+//   async (req, res) => {
+//     const errors = validationResult(req);
 
-    await User.find()
-      .populate("role")
-      .then((users) => {
-        if (!errors.isEmpty()) {
-          return res.status(422).render("users.ejs", {
-            errors: errors.array(),
-            users: users,
-            user: req.body.user,
-          });
-        }
-        User.create({
-          pseudo: req.body.user,
-          uuid: uuidv4(),
-        });
-        res.redirect("/users");
-      });
-  },
-);
+//     await User.find()
+//       .populate("role")
+//       .then((users) => {
+//         if (!errors.isEmpty()) {
+//           return res.status(422).render("users.ejs", {
+//             errors: errors.array(),
+//             users: users,
+//             user: req.body.user,
+//           });
+//         }
+//         User.create({
+//           pseudo: req.body.user,
+//           uuid: uuidv4(),
+//         });
+//         res.redirect("/users");
+//       });
+//   },
+// );
 
 app.get("/cities/:uuid", (req, res) => {
   City.findOne({ uuid: req.params.uuid })
